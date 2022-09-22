@@ -1,15 +1,18 @@
---- 
+---
+ 
 - hosts: all
   become: true
   tasks: 
 
   - shell: echo 'jefferson'
     register: username
-  -  debug: msg= "Ansible Managed node by Jefferson"
+  -  debug:
+           msg= "Ansible Managed node by {{ username.stdout}}"
 
   - shell: echo 'Jefferson Langbid'
     register: myName
-  -  debug: msg= "My name is Jeff and I made this "
+  -  debug: 
+           msg= "My name is {{ myName.stdout}}, and I made this "
 
   - name: install python3, pip3, and java package in Ubuntu 
     apt:
