@@ -1,0 +1,41 @@
+--- 
+- hosts: all
+  become: true
+  tasks: 
+
+  - shell: echo 'jefferson'
+    register: username
+  -  debug: msg= "Ansible Managed node by Jefferson"
+
+  - shell: echo 'Jefferson Langbid'
+    register: myName
+  -  debug: msg= "My name is Jeff and I made this "
+
+  - name: install python3, pip3, and java package in Ubuntu 
+    apt:
+      name: 
+        - python3
+        - python3-pip
+        - openjdk-11-jdk
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install python3 and pip3  package in CentOS
+    dnf:
+      name: 
+        - python3
+        - python3-pip
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+
+  - name: install java package in CentOS
+    package:
+      name: java
+      state: present
+    vars:
+     packages:
+      - openjdk-11-jdk
+    when: ansible_distribution == "CentOS"
