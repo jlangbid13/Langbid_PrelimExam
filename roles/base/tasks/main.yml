@@ -1,27 +1,4 @@
 ---
-
-- hosts: all
-  become: true
-  pre_tasks:
-
-  - name: install updates (CentOS)
-    tags: always
-    dnf:
-      update_only: yes
-      update_cache: yes
-    when: ansible_distribution == "CentOS"
-
-  - name: install updates (Ubuntu)
-    tags: always
-    apt:
-      upgrade: dist
-      update_cache: yes
-    when: ansible_distribution == "Ubuntu"
-
-- hosts: workstations
-  become: true
-  tasks:
-
   - name: install unzip
     package:
       name: unzip
@@ -35,10 +12,6 @@
       mode: 0755
       owner: root
       group: root
-
-- hosts: web_servers
-  become: true
-  tasks:
 
   - name: install apache and php for Ubuntu servers
     tags: apache, apache2, ubuntu
@@ -75,11 +48,6 @@
       group: root
       mode: 0644
 
-
-
-- hosts: db_servers
-  become: true
-  tasks:
 
   - name: install mariadb package (CentOS)
     tags: centos, db, mariadb
